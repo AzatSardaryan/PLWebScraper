@@ -27,11 +27,11 @@ for team_url in team_urls:
     soup = BeautifulSoup(data, "lxml")
     stats = soup.find_all("table", class_ = "stats_table")[0]
 
-    if stats and stats.columns: stats.columns = stats.columns.droplevel()
+    if stats and stats.columns: stats.columns = stats.columns.droplevel(0)
     team_data = pd.read_html(str(stats))[0]
     team_data["Team"] = team_name
     all_teams.append(team_data)
-    time.sleep(5)
+    time.sleep(10)
 
 stat_df = pd.concat(all_teams)
 stat_df.to_csv("stats.csv")
